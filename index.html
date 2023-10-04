@@ -201,33 +201,35 @@
 											<div class="text-h2 form-h2">Форма обратной свзязи</div>
 											<div class="text-h6 form-h6">Заполните форму и мы вам перезвоним
 												для оформления заказа или ответим на все вопросы</div>
-											<form class="form-content">
-												<input type="text" required name="username"
+											<form class="form-content" id="data-to-send">
+												<input type="text" required name="username" id="order-form-username"
 													class="text-h6 order-name form-control" placeholder="Имя*" />
-												<input type="tel" required name="tel" minlength="10" maxlength="16"
+												<input type="tel" required name="tel" minlength="10" maxlength="16" id="order-form-tel"
 													class="text-h6 order-phone form-control" placeholder="Телефон*" />
-												<input type="email" required name="email"
+												<input type="email" required name="email" id="order-form-email"
 													class="text-h6 order-mail form-control" placeholder="Почта*" />
 												<textarea class="text-h6 order-question form-control"
-													placeholder="Сообщение (не обязательно)" name="question"></textarea>
+													placeholder="Сообщение (не обязательно)" name="question"  id="order-form-message"></textarea>
 												<!-- <input type="file"
 													accept=".jpeg,.png,.svg,.gif,.xls,.xlsx,.txt,.pdf,.tif,.doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 													name="file" class="text-h6 order-file form-control"
 													placeholder="Загрузите файл (не обязательно)" />
 													<span class="input-file-text">Выберите файл</span> -->
-												<div class="input__wrapper">
+												<!-- <div class="input__wrapper">
 													<input name="file" type="file" id="input__file"
 														class="input input__file" multiple>
 													<label for="input__file" class="input__file-button">
 														<span class="text-h6 input__file-button-text">Прикрепите файл</span>
 													</label>
-												</div>
+												</div> -->
 												<div class="tooltiptext order-tooltip">Нажимая на кнопку “Свяжитесь со
 													мной”, вы даете согласие с Политикой обработки персональных данных.
 												</div>
-												<input type="submit"
-													class="button2 b-green rot-135 button-text submit-button"
-													value="Свяжитесь со мной" />
+												
+												<input type="button" onclick="send_message(),  toggleModal()"
+												class="button2 b-green rot-135 button-text submit-button" value="Свяжитесь со мной" />
+												
+											
 											</form>
 										</div>
 									</div>

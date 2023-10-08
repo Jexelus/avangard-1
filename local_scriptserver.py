@@ -10,19 +10,17 @@ import threading
 import json
 import time
 from template import make_template
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 import locale
 import datetime
-locale.setlocale(
-    category=locale.LC_ALL,
-    locale="Russian"  # Note: do not use "de_DE" as it doesn't work
-)
 
 def send_ya_mail(msg_text: str, data: dict):
-    login = 'epickgame.cannel@yandex.ru'
-    password = 'Jexel1708.'
+    login = 'avangardprint-nn@yandex.ru'
+    password = 'K0r0basik'
 
     msg = MIMEMultipart()
     msg['Subject'] = Header(f'Новый заказ от {data["username"]}', 'utf-8')
@@ -96,25 +94,30 @@ def delete_m_f_mq(key):
 
 @app.route('/send_message', methods=['POST'])
 def send_messege():
-    print('start send process')
-    data = request.form  
-    username = data['username']
-    tel = data['tel']
-    email = data['email']
+    try:
+        print('start send process')
+        data = request.form  
+        username = data['username']
+        tel = data['tel']
+        email = data['email']
+    except Exception as e:
+        print(e)
     try:
         question = data['question']
         if question == '':
             question = 'Пользователь не писал никаих вопросов'    
     except:
         question = 'Пользователь не писал никаих вопросов'
-    
-    msg = f'Новый заказ от {formatdate(localtime=True)}. Номер телефона: {tel}, ФИО: {username}, email: {email}, Сообщение: {question}'
-    msg_data = {'username':username, 'tel':tel, 'email':email, 'question':question}
-    write_mq(msg, msg_data)
-    return jsonify({'msg':'ok'}), 200
+    try:
+        msg = f'Новый заказ от {formatdate(localtime=True)}. Номер телефона: {tel}, ФИО: {username}, email: {email}, Сообщение: {question}'
+        msg_data = {'username':username, 'tel':tel, 'email':email, 'question':question}
+        write_mq(msg, msg_data)
+        return jsonify({'msg':'ok'}), 200
+    except Exception as e:
+        print(e)
 
 if __name__ == '__main__':
     t1 = msg_quetes()
     t1.daemon = True
     t1.start()
-    app.run(host='localhost', port=9999, debug=False)
+    app.run(host='0.0.0.0', port=9999, debug=False, ssl_context=("cert.pem", "key.pem"))

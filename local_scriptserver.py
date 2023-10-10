@@ -10,7 +10,7 @@ import threading
 import json
 import time
 from template import make_template
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 CORS(app)
@@ -93,6 +93,7 @@ def delete_m_f_mq(key):
         mq_f.close()
 
 @app.route('/send_message', methods=['POST'])
+@cross_origin()
 def send_messege():
     try:
         print('start send process')
@@ -116,8 +117,12 @@ def send_messege():
     except Exception as e:
         print(e)
 
+@app.route('/echo', methods=['POST', 'GET'])
+def echo():
+    return jsonify({'echo':'echo'})
+
 if __name__ == '__main__':
     t1 = msg_quetes()
     t1.daemon = True
     t1.start()
-    app.run(host='0.0.0.0', port=9999, debug=False, ssl_context=("cert.pem", "key.pem"))
+    app.run(host='0.0.0.0', port=9999, debug=False)

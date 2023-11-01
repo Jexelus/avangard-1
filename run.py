@@ -54,6 +54,7 @@ class msg_quetes(threading.Thread):
     
     def run(self):
         while True:
+            
             try:
                 mq = read_mq()
                 for key, item in mq.items():
@@ -131,4 +132,4 @@ if __name__ == '__main__':
     t1.daemon = True
     t1.start()
     #socketio.run(app)
-    app.run(host='0.0.0.0', port=9999, debug=False)
+    app.run(host='avangardprint.ru', port=5000, debug=False)
